@@ -95,7 +95,7 @@ export default function AuthPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white" style={{ fontFamily: "Comic Sans MS, cursive, sans-serif" }}>
+    <div className="min-h-screen bg-white" style={{ fontFamily: "Comic Neue, Comic Sans MS, cursive, sans-serif" }}>
       {/* Header */}
       <header className="bg-green-600 text-white py-6">
         <div className="container mx-auto px-4 flex justify-between items-center">

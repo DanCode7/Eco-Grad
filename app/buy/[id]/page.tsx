@@ -94,7 +94,7 @@ export default function BuyDetailPage({ params }: { params: Promise<{ id: string
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center" style={{ fontFamily: "Comic Sans MS, cursive, sans-serif" }}>
+      <div className="min-h-screen bg-white flex items-center justify-center" style={{ fontFamily: "Comic Neue, Comic Sans MS, cursive, sans-serif" }}>
         <p className="text-green-600 text-xl">Loading product details...</p>
       </div>
     )
@@ -104,7 +104,7 @@ export default function BuyDetailPage({ params }: { params: Promise<{ id: string
     return (
       <div
         className="min-h-screen bg-white flex items-center justify-center"
-        style={{ fontFamily: "Comic Sans MS, cursive, sans-serif" }}
+        style={{ fontFamily: "Comic Neue, Comic Sans MS, cursive, sans-serif" }}
       >
         <div className="text-center">
           <p className="text-gray-500 text-lg">{error || "Product not found"}</p>
@@ -117,7 +117,7 @@ export default function BuyDetailPage({ params }: { params: Promise<{ id: string
   }
 
   return (
-    <div className="min-h-screen bg-white" style={{ fontFamily: "Comic Sans MS, cursive, sans-serif" }}>
+    <div className="min-h-screen bg-white" style={{ fontFamily: "Comic Neue, Comic Sans MS, cursive, sans-serif" }}>
       {/* Header */}
       <header className="bg-green-600 text-white py-6">
         <div className="container mx-auto px-4 flex justify-between items-center">
