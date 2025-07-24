@@ -70,7 +70,7 @@ export default function HomePage() {
             {/* Mission Statement Link */}
             <div className="mb-6">
               <a 
-                href="https://docs.google.com/document/d/14G2vaFwCRCXkmmFNBKuSriWBlT7_WfB899MbyAaxEVQ/edit?tab=t.0"
+                href="/mission-statement.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block bg-green-100 hover:bg-green-200 text-green-700 px-4 py-2 rounded-lg border-2 border-green-600 font-semibold transition-colors"
