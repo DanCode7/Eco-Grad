@@ -88,21 +88,22 @@ export default function HomePage() {
               makes graduation accessible to all students.
             </p>
             
-            {/* Reference Section */}
-            <div className="mt-12">
-              {/* Divider */}
-              <div className="border-t-2 border-dashed border-gray-400 mb-8"></div>
-              
-              <div className="text-center">
-                <a 
-                  href="https://docs.google.com/document/d/1YADRt_5lUWG0BSegVcKdURNu2QO_iNT-6uVApA3R-BE/edit?tab=t.0"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block text-green-600 hover:text-green-700 font-semibold text-lg transition-colors"
-                >
-                  Reference
-                </a>
-              </div>
+          </div>
+          
+          {/* Reference Section */}
+          <div className="mt-12">
+            {/* Divider - same as above */}
+            <div className="border-t-2 border-dashed border-gray-400 mb-12"></div>
+            
+            <div className="text-center">
+              <a 
+                href="https://docs.google.com/document/d/1YADRt_5lUWG0BSegVcKdURNu2QO_iNT-6uVApA3R-BE/edit?tab=t.0"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block text-green-600 hover:text-green-700 font-semibold text-lg transition-colors"
+              >
+                Reference
+              </a>
             </div>
           </div>
         </div>
