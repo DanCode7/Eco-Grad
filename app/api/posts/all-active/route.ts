@@ -24,7 +24,8 @@ export async function GET() {
         u.username as seller_email
       FROM posts p
       JOIN users u ON p.user_id = u.id
-      ORDER BY p.status ASC, p.created_at DESC`
+      ORDER BY p.status ASC, p.created_at DESC
+      LIMIT 20`
     );
 
     await connection.end();

@@ -37,7 +37,7 @@ export default function BuyPage() {
   useEffect(() => {
     const loadActivePosts = async () => {
       try {
-        const response = await fetch('/api/posts/all-active-light')
+        const response = await fetch('/api/posts/all-active')
         const data = await response.json()
 
         if (!response.ok) {
