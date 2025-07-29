@@ -75,9 +75,15 @@ export default function HomePage() {
               <p className="text-lg leading-relaxed">
                 Every year, millions of students graduate wearing caps, gowns, and stoles made from 100% polyester. Most of this regalia is only worn once, then discarded, contributing to growing textile waste and environmental harm. As past and future graduating students, we recognize our role in the overconsumption of graduation regalia, which is often purchased for a single use and then discarded. Our mission is to reduce textile waste and make graduation ceremonies more accessible by providing a platform where students can donate, resell, or reuse caps, gowns, and stoles. We believe that every student, regardless of financial background, should be able to celebrate their achievements without facing unnecessary environmental or economic burdens.
               </p>
+            </div>
+          </div>
 
-              {/* Divider */}
-              <div className="border-t-2 border-dashed border-gray-400 my-8"></div>
+          {/* Divider */}
+          <div className="border-t-2 border-dashed border-gray-400 my-12"></div>
+
+          {/* Why Donate Section */}
+          <div className="max-w-5xl mx-auto text-left">
+            <div className="space-y-6 text-gray-700">
 
               <h3 className="text-2xl text-green-600 font-bold mt-8 mb-4 text-center">Why donate?</h3>
               
