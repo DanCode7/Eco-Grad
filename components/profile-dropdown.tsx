@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { User, LogOut } from "lucide-react"
+import { User, LogOut, MessageCircle, Package } from "lucide-react"
 
 interface ProfileDropdownProps {
   className?: string
@@ -52,6 +52,24 @@ export function ProfileDropdown({ className = "" }: ProfileDropdownProps) {
             <p className="text-sm text-gray-600">Signed in as:</p>
             <p className="text-sm font-semibold text-green-600 truncate">{userEmail}</p>
           </div>
+
+          {/* My Posts */}
+          <button
+            onClick={() => router.push('/my-posts')}
+            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded transition-colors"
+          >
+            <Package className="w-4 h-4" />
+            My Posts
+          </button>
+
+          {/* Messages */}
+          <button
+            onClick={() => router.push('/messages')}
+            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded transition-colors"
+          >
+            <MessageCircle className="w-4 h-4" />
+            Messages
+          </button>
 
           {/* Logout Button */}
           <button

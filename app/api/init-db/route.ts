@@ -42,6 +42,27 @@ export async function GET() {
       )
     `);
 
+    // Create messages table if it doesn't exist
+    await connection.execute(`
+      CREATE TABLE IF NOT EXISTS messages (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        sender_id INT NOT NULL,
+        receiver_id INT NOT NULL,
+        post_id INT NOT NULL,
+        message TEXT NOT NULL,
+        is_read BOOLEAN DEFAULT FALSE,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE,
+        FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE CASCADE,
+        FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE,
+        INDEX idx_sender_id (sender_id),
+        INDEX idx_receiver_id (receiver_id),
+        INDEX idx_post_id (post_id),
+        INDEX idx_is_read (is_read),
+        INDEX idx_created_at (created_at)
+      )
+    `);
+
     await connection.end();
 
     return NextResponse.json(

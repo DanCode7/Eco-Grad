@@ -30,6 +30,7 @@ export async function POST(request: Request) {
         p.status,
         p.created_at,
         p.updated_at,
+        p.user_id,
         u.username as seller_email
       FROM posts p
       JOIN users u ON p.user_id = u.id

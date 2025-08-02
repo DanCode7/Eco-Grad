@@ -6,7 +6,7 @@ import { useState, useEffect, use } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { ArrowLeft, ImageIcon } from "lucide-react"
+import { ArrowLeft, ImageIcon, MessageCircle } from "lucide-react"
 import { ProfileDropdown } from "@/components/profile-dropdown"
 
 interface Product {
@@ -24,6 +24,7 @@ interface Product {
   created_at: string
   updated_at: string
   seller_email: string
+  user_id: number
 }
 
 export default function BuyDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -33,6 +34,10 @@ export default function BuyDetailPage({ params }: { params: Promise<{ id: string
   const [isImageModalOpen, setIsImageModalOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState("")
+  const [showMessageModal, setShowMessageModal] = useState(false)
+  const [messageText, setMessageText] = useState("")
+  const [sendingMessage, setSendingMessage] = useState(false)
+  const [currentUserId, setCurrentUserId] = useState<number | null>(null)
 
   const handleImageClick = () => {
     if (product?.image_url) {
@@ -42,6 +47,49 @@ export default function BuyDetailPage({ params }: { params: Promise<{ id: string
 
   const closeImageModal = () => {
     setIsImageModalOpen(false)
+  }
+
+  const handleSendMessage = async () => {
+    if (!messageText.trim() || !currentUserId || !product) return
+
+    setSendingMessage(true)
+    try {
+      const response = await fetch('/api/messages/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          senderId: currentUserId,
+          receiverId: product.user_id,
+          postId: product.id,
+          message: messageText,
+        }),
+      })
+
+      if (response.ok) {
+        setShowMessageModal(false)
+        setMessageText("")
+        alert('Message sent successfully!')
+      } else {
+        alert('Failed to send message')
+      }
+    } catch (error) {
+      console.error('Error sending message:', error)
+      alert('An error occurred while sending the message')
+    } finally {
+      setSendingMessage(false)
+    }
+  }
+
+  const handleMessageClick = () => {
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true'
+    if (!isLoggedIn) {
+      alert('Please login to send messages')
+      router.push('/auth')
+      return
+    }
+    setShowMessageModal(true)
   }
 
   useEffect(() => {
@@ -89,7 +137,30 @@ export default function BuyDetailPage({ params }: { params: Promise<{ id: string
       }
     }
 
+    const loadCurrentUser = async () => {
+      const userEmail = localStorage.getItem('userEmail')
+      if (userEmail) {
+        try {
+          const response = await fetch('/api/auth/current-user', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username: userEmail }),
+          })
+          
+          if (response.ok) {
+            const data = await response.json()
+            setCurrentUserId(data.userId)
+          }
+        } catch (error) {
+          console.error('Error loading current user:', error)
+        }
+      }
+    }
+
     loadProductDetails()
+    loadCurrentUser()
   }, [resolvedParams.id])
 
   if (isLoading) {
@@ -210,6 +281,15 @@ export default function BuyDetailPage({ params }: { params: Promise<{ id: string
                     {product.status === "sold" ? "This item has been sold" : product.contact_info}
                   </p>
                 </div>
+                {product.status === "active" && currentUserId !== product.user_id && (
+                  <Button
+                    onClick={handleMessageClick}
+                    className="mt-4 w-full bg-green-600 hover:bg-green-700 text-white flex items-center justify-center gap-2"
+                  >
+                    <MessageCircle className="w-4 h-4" />
+                    Send Message to Seller
+                  </Button>
+                )}
               </div>
             </div>
           </div>
@@ -239,6 +319,39 @@ export default function BuyDetailPage({ params }: { params: Promise<{ id: string
               className="max-w-full max-h-full object-contain rounded-lg"
               onClick={(e) => e.stopPropagation()}
             />
+          </div>
+        </div>
+      )}
+
+      {/* Message Modal */}
+      {showMessageModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+            <h3 className="text-xl font-bold text-green-600 mb-4">Send Message to Seller</h3>
+            <p className="text-gray-600 mb-4">About: {product?.title || product?.item_type}</p>
+            <textarea
+              value={messageText}
+              onChange={(e) => setMessageText(e.target.value)}
+              placeholder="Type your message here..."
+              className="w-full h-32 p-3 border border-gray-300 rounded-lg resize-none focus:outline-none focus:border-green-500"
+            />
+            <div className="flex gap-3 mt-4">
+              <Button
+                onClick={() => setShowMessageModal(false)}
+                variant="outline"
+                className="flex-1"
+                disabled={sendingMessage}
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleSendMessage}
+                className="flex-1 bg-green-600 hover:bg-green-700 text-white"
+                disabled={sendingMessage || !messageText.trim()}
+              >
+                {sendingMessage ? 'Sending...' : 'Send Message'}
+              </Button>
+            </div>
           </div>
         </div>
       )}
